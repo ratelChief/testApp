@@ -1,0 +1,7 @@
+.cards {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fill, 270px);
+  grid-auto-rows: minmax(min-content, max-content);
+  overflow: auto;
+}
