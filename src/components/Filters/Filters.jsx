@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import { getDataByName } from 'redux/selectors';
@@ -15,29 +15,29 @@ const Filters = () => {
     return { max: Math.max(...prices), min: Math.min(...prices) };
   }, shallowEqual);
 
-  const sliderRef = useRef(max);
+  const [formState, setFormState] = useState({ city: cities[0].value });
+
+  const handleCityChange = (event) => {
+    setFormState({ ...formState, city: event.target.value });
+  };
 
   const handleSubmit = (...args) => {
     debugger;
   };
 
-  const handlePriceChange = (event) => {
-    sliderRef.current = event.target.valueAsNumber;
-  };
-
   return (
     <aside>
       <form onSubmit={handleSubmit} className="filters">
-        <City options={cities} />
+        <City options={cities} value={formState.city} onChange={handleCityChange} />
 
         <Categories checkboxes={categories} />
 
         <div>
-          <Price ref={sliderRef} max={max} min={min} onChange={handlePriceChange} />
+          <Price max={max} min={min} />
 
           <div>
             <div>
-              {min}\{sliderRef.current}
+              {min}\{max}
             </div>
             <button type="submit">Filter</button>
           </div>

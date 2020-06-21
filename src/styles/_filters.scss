@@ -4,7 +4,7 @@
 
   grid: auto auto auto/ 1fr;
 
-  row-gap: 55px ;
+  row-gap: 55px;
 }
 
 .label {
@@ -32,7 +32,7 @@
   color: $trout;
 
   border: 1px solid $iron;
-  
+
   appearance: none;
   font-variant-numeric: lining-nums;
 }
@@ -40,13 +40,76 @@
 .select__icon {
   display: inline-block;
   padding: 2px;
-  
+
   position: absolute;
   right: 25px;
   top: 50%;
-  
+
   border: solid black;
   border-width: 0 1px 1px 0;
 
   transform: rotate(45deg) translateY(-100%);
+}
+
+.categories__input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.categories__label {
+  display: flex;
+  font-family: 'Raleway Regular';
+  font-size: 15px;
+  line-height: 1.2;
+  color: $tuna;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 17px;
+}
+
+.categories__label:last-child {
+  margin-bottom: 0;
+}
+
+.categories__checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  border: 1px solid $iron;
+}
+
+.categories__label:hover ~ .categories__checkbox,
+.categories__input:focus + .categories__checkbox,
+.categories__checkbox:hover,
+.categories__checkbox:focus {
+  border-color: $dodgerBlue;
+}
+
+.categories__input:checked + .categories__checkbox {
+  border-color: $dodgerBlue;
+}
+
+.categories__checkbox:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.categories__input:checked + .categories__checkbox:after {
+  display: block;
+}
+
+.categories__checkbox:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid $dodgerBlue;
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg);
 }

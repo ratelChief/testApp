@@ -6,10 +6,17 @@ const Categories = (props) => {
       <span className="label">Categories</span>
 
       {props.checkboxes.map((checkbox) => (
-        <label htmlFor={checkbox.id} key={checkbox.id}>
-          <input type="checkbox" id={checkbox.id} name={checkbox.name} value={checkbox.id} />
+        <label htmlFor={checkbox.id} key={checkbox.id} className="categories__label">
+          <input
+            type="checkbox"
+            id={checkbox.id}
+            name={checkbox.name}
+            value={checkbox.id}
+            className="categories__input"
+          />
 
           {checkbox.name}
+          <span className="categories__checkbox" />
         </label>
       ))}
     </div>
