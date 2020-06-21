@@ -8,9 +8,7 @@ function App() {
   return (
     <div className="layout">
       <main className="main">
-        <aside>
-          <Filters />
-        </aside>
+        <Filters />
 
         <Cards />
       </main>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-
 import { useSelector } from 'react-redux';
+
 import getEntityName from 'redux/selectors/getEntityName';
+
 import image1 from '../../images/image1.jpg';
 
 const Card = (props) => {

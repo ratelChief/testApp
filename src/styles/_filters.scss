@@ -1,2 +1,52 @@
 .filters {
+  padding: 50px 0;
+  display: grid;
+
+  grid: auto auto auto/ 1fr;
+
+  row-gap: 55px ;
+}
+
+.label {
+  font-family: 'Montserrat Bold';
+  font-size: 18px;
+  line-height: 1.3;
+  color: $tuna;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.city__wrapper {
+  position: relative;
+}
+
+.city__select {
+  width: 240px;
+  height: 40px;
+  padding: 0 25px 0 14px;
+
+  font-family: 'Raleway Medium';
+  font-size: 15px;
+  line-height: 15px;
+  color: $trout;
+
+  border: 1px solid $iron;
+  
+  appearance: none;
+  font-variant-numeric: lining-nums;
+}
+
+.select__icon {
+  display: inline-block;
+  padding: 2px;
+  
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  
+  border: solid black;
+  border-width: 0 1px 1px 0;
+
+  transform: rotate(45deg) translateY(-100%);
 }
