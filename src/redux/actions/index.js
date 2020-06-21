@@ -1,1 +1,1 @@
-export { setFilter } from './setFilter';
+export { setFilter, setFilteredData } from './setFilter';

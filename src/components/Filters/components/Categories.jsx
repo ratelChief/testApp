@@ -7,7 +7,9 @@ const Categories = (props) => {
     event.preventDefault();
 
     if (event.key === ENTER_KEY) {
-      // props.onChange();
+      const fakeEvent = { target: { checked: !event.target.checked, id: event.target.id } };
+
+      props.onChange(fakeEvent);
     }
   };
 
@@ -24,13 +26,18 @@ const Categories = (props) => {
               type="checkbox"
               id={id}
               name={name}
-              value={id}
-              className="categories__input"
+              className={`categories__input ${
+                props.checkedCategories.get(id) ? 'categories__input--checked' : ''
+              }`}
               onKeyPress={handleKeyPressed}
+              onChange={props.onChange}
+              value={id}
+              checked={props.checkedCategories.get(id)}
             />
 
             {name}
-            <span className="categories__count">{`(${props.categoriesCounter[id]})`}</span>
+
+            <span className="categories__count">{`(${props.counter[id]})`}</span>
 
             <span className="categories__checkbox" />
           </label>

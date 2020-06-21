@@ -1,22 +1,24 @@
 import { normalize } from 'redux/utils/normalize';
-import { SET_FILTER } from 'redux/actionTypes';
+import { SET_FILTER, SET_FILTERED_DATA } from 'redux/actionTypes';
 import { city, category, data } from 'mocks';
 
 const initialState = {
-  data: normalize(data),
-  city: normalize(city),
   category: normalize(category),
-  filter: {},
+  city: normalize(city),
+  data: normalize(data),
+  filteredData: data,
+  filters: {},
 };
 
 const reducerState = {
-  [SET_FILTER]: (state, action) => {
-    debugger;
-    return {
-      ...state,
-      filter: { ...action.payload },
-    };
-  },
+  [SET_FILTER]: (state, action) => ({
+    ...state,
+    filters: action.payload,
+  }),
+  [SET_FILTERED_DATA]: (state, action) => ({
+    ...state,
+    filteredData: action.payload,
+  }),
 };
 
 const reducer = (state = initialState, action) => {

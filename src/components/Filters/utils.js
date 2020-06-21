@@ -1,14 +1,18 @@
-export const getMinMax = (data) => {
-  const prices = data.map((item) => item.price);
+export const categoriesToArray = (categories) =>
+  Array.from(categories).reduce((acc, [key, value]) => {
+    if (value) {
+      acc.push(key);
+    }
 
-  return { max: Math.max(...prices), min: Math.min(...prices) };
+    return acc;
+  }, []);
+
+export const categoriesToMap = (initValues = []) => {
+  const map = new Map();
+
+  initValues.forEach((value) => {
+    map.set(value, true);
+  });
+
+  return map;
 };
-
-export const getCategoriesCount = (list, data) =>
-  list.reduce(
-    (acc, cur) => ({
-      ...acc,
-      [cur]: data.filter((item) => item.category === cur).length,
-    }),
-    {},
-  );

@@ -30,9 +30,7 @@ const Card = (props) => {
       </div>
 
       <div className="card__description">
-        <p className="card__text card__text--bold">
-          Affiliate Marketing - A Beginner&apos;s Guide to Earning Online
-        </p>
+        <p className="card__text card__text--bold">{name}</p>
 
         <div className="card__footer">
           <span className="card__category">{categoryName}</span>

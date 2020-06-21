@@ -13,8 +13,9 @@ const City = (props) => {
             value={props.value}
             onChange={props.onChange}
           >
+            <option value={0} name="" />
             {props.options.map((option) => (
-              <option key={option.id} value={option.value} name={option.value}>
+              <option key={option.id} value={option.id} name={option.value}>
                 {option.name}
               </option>
             ))}

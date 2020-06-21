@@ -1,1 +1,1 @@
-export { SET_FILTER } from './filters';
+export { SET_FILTER, SET_FILTERED_DATA } from './filters';

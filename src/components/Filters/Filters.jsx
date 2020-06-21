@@ -1,33 +1,18 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
-import { getMinMax, getCategoriesCount } from './utils';
+import { categoriesToArray, categoriesToMap } from './utils';
 
-import { City, Categories, Price } from './components';
+import { City, Categories, Price, PriceRange } from './components';
 
 const Filters = (props) => {
-  const { data, cities, categories, categoriesList } = props;
+  const { min, max, cities, filters, counter } = props;
 
-  const rerender = useRef(1);
-  const recount = useRef(0);
-
-  useEffect(() => {
-    rerender.current += 1;
-
-    console.log('rerender.current', rerender.current);
+  const [formState, setFormState] = useState({
+    city: filters.city ?? cities[0].id,
+    price: filters.price || [min, max],
+    checkedCategories: categoriesToMap(filters.categories),
   });
-
-  const { max, min } = useMemo(() => {
-    recount.current += 1;
-    console.log('recount', recount.current);
-    return getMinMax(data);
-  }, [data]);
-
-  const categoriesCounter = useMemo(() => {
-    return getCategoriesCount(categoriesList, data);
-  }, [categoriesList, data]);
-
-  const [formState, setFormState] = useState({ city: cities[0].value, price: [min, max] });
-  const { city, price } = formState;
+  const { city, price, checkedCategories } = formState;
 
   const handleCityChange = (event) => {
     setFormState({ ...formState, city: event.target.value });
@@ -37,8 +22,18 @@ const Filters = (props) => {
     setFormState({ ...formState, price: values });
   };
 
-  const handleSubmit = (...args) => {
-    debugger;
+  const handleCategoriesChange = (event) => {
+    const { checked, id } = event.target;
+
+    setFormState({ ...formState, checkedCategories: checkedCategories.set(Number(id), checked) });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const categories = categoriesToArray(formState.checkedCategories);
+
+    props.onSubmit({ city: Number(city), price, categories });
   };
 
   return (
@@ -46,17 +41,18 @@ const Filters = (props) => {
       <form onSubmit={handleSubmit} className="filters">
         <City options={cities} value={city} onChange={handleCityChange} />
 
-        <Categories checkboxes={categories} categoriesCounter={categoriesCounter} />
+        <Categories
+          checkboxes={props.categories}
+          checkedCategories={checkedCategories}
+          counter={counter}
+          onChange={handleCategoriesChange}
+        />
 
         <div>
           <Price max={max} min={min} value={price} onChange={handlePriceChange} />
 
           <div className="filters__footer">
-            <div className="filters__price-range">
-              <span>
-                ${price[0]} <span className="price-divider">-</span> ${price[1]}
-              </span>
-            </div>
+            <PriceRange min={price[0]} max={price[1]} />
 
             <button type="submit" className="button button--primary">
               Filter
