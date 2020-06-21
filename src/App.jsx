@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Filters, Cards } from 'components';
+import { Cards } from 'components';
+import { Filters } from 'containers';
 
 import 'styles/index.scss';
 

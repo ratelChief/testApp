@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 
-import { getDataByName } from 'redux/selectors';
+import { getMinMax, getCategoriesCount } from './utils';
 
 import { City, Categories, Price } from './components';
 
-const Filters = () => {
-  const cities = useSelector((state) => getDataByName(state, 'city'));
-  const categories = useSelector((state) => getDataByName(state, 'category'));
-  const { max, min } = useSelector((state) => {
-    const data = getDataByName(state, 'data');
-    const prices = data.map((item) => item.price);
+const Filters = (props) => {
+  const { data, cities, categories, categoriesList } = props;
 
-    return { max: Math.max(...prices), min: Math.min(...prices) };
-  }, shallowEqual);
+  const rerender = useRef(1);
+  const recount = useRef(0);
 
-  const [formState, setFormState] = useState({ city: cities[0].value });
+  useEffect(() => {
+    rerender.current += 1;
+
+    console.log('rerender.current', rerender.current);
+  });
+
+  const { max, min } = useMemo(() => {
+    recount.current += 1;
+    console.log('recount', recount.current);
+    return getMinMax(data);
+  }, [data]);
+
+  const categoriesCounter = useMemo(() => {
+    return getCategoriesCount(categoriesList, data);
+  }, [categoriesList, data]);
+
+  const [formState, setFormState] = useState({ city: cities[0].value, price: [min, max] });
+  const { city, price } = formState;
 
   const handleCityChange = (event) => {
     setFormState({ ...formState, city: event.target.value });
+  };
+
+  const handlePriceChange = (values) => {
+    setFormState({ ...formState, price: values });
   };
 
   const handleSubmit = (...args) => {
@@ -28,18 +44,23 @@ const Filters = () => {
   return (
     <aside>
       <form onSubmit={handleSubmit} className="filters">
-        <City options={cities} value={formState.city} onChange={handleCityChange} />
+        <City options={cities} value={city} onChange={handleCityChange} />
 
-        <Categories checkboxes={categories} />
+        <Categories checkboxes={categories} categoriesCounter={categoriesCounter} />
 
         <div>
-          <Price max={max} min={min} />
+          <Price max={max} min={min} value={price} onChange={handlePriceChange} />
 
-          <div>
-            <div>
-              {min}\{max}
+          <div className="filters__footer">
+            <div className="filters__price-range">
+              <span>
+                ${price[0]} <span className="price-divider">-</span> ${price[1]}
+              </span>
             </div>
-            <button type="submit">Filter</button>
+
+            <button type="submit" className="button button--primary">
+              Filter
+            </button>
           </div>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const City = (props) => {
   return (
@@ -27,4 +27,4 @@ const City = (props) => {
   );
 };
 
-export default City;
+export default memo(City);
